@@ -17,7 +17,7 @@ class ShoppingCartActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityShoppingCartBinding.inflate(layoutInflater)
-        setContentView(R.layout.activity_shopping_cart)
+        setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
 
         supportActionBar?.setDisplayShowHomeEnabled(true)
