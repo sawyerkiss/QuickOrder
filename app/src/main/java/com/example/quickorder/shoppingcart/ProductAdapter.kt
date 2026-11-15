@@ -18,13 +18,37 @@ class ProductAdapter(var context: Context, var products: List<Product> = arrayLi
     RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.product_row_item, parent, false)
-        val availableHeight = parent.measuredHeight - parent.paddingTop - parent.paddingBottom
-        if (availableHeight > 0) {
-            val params = view.layoutParams as ViewGroup.MarginLayoutParams
-            params.height = availableHeight / ROWS_PER_SCREEN - params.topMargin - params.bottomMargin
-        }
         return ViewHolder(view)
 
+    }
+
+    private var recyclerView: RecyclerView? = null
+
+    private val heightListener = View.OnLayoutChangeListener { v, _, top, _, bottom, _, oldTop, _, oldBottom ->
+        if (bottom - top != oldBottom - oldTop) v.post { notifyDataSetChanged() }
+    }
+
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        this.recyclerView = recyclerView
+        recyclerView.addOnLayoutChangeListener(heightListener)
+    }
+
+    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
+        recyclerView.removeOnLayoutChangeListener(heightListener)
+        this.recyclerView = null
+    }
+
+    private fun applyRowHeight(view: View) {
+        val parent = recyclerView ?: return
+        val availableHeight = parent.height - parent.paddingTop - parent.paddingBottom
+        if (availableHeight <= 0) return
+        val params = view.layoutParams
+        // StaggeredGridLayoutManager subtracts the item margins from an exact height itself.
+        val rowHeight = availableHeight / ROWS_PER_SCREEN
+        if (params.height != rowHeight) {
+            params.height = rowHeight
+            view.layoutParams = params
+        }
     }
 
     override fun getItemCount(): Int = products.size
@@ -35,6 +59,7 @@ class ProductAdapter(var context: Context, var products: List<Product> = arrayLi
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
 
+        applyRowHeight(viewHolder.itemView)
         viewHolder.bindProduct(products[position])
 
 
