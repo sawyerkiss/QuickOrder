@@ -18,11 +18,20 @@ class ProductAdapter(var context: Context, var products: List<Product> = arrayLi
     RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.product_row_item, parent, false)
+        val availableHeight = parent.measuredHeight - parent.paddingTop - parent.paddingBottom
+        if (availableHeight > 0) {
+            val params = view.layoutParams as ViewGroup.MarginLayoutParams
+            params.height = availableHeight / ROWS_PER_SCREEN - params.topMargin - params.bottomMargin
+        }
         return ViewHolder(view)
 
     }
 
     override fun getItemCount(): Int = products.size
+
+    companion object {
+        private const val ROWS_PER_SCREEN = 3
+    }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
 

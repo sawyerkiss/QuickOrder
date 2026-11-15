@@ -24,7 +24,8 @@
                 android:padding="10dp"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="0dp"
+                android:layout_weight="1">
 
 
             <TextView
@@ -32,6 +33,8 @@
                     android:textSize="22sp"
                     android:layout_marginBottom="12dp"
                     android:id="@+id/product_name"
+                    android:maxLines="2"
+                    android:ellipsize="end"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
@@ -46,6 +49,8 @@
             <TextView
                     android:textSize="25sp"
                     android:id="@+id/product_category"
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     android:textColor="@android:color/holo_blue_dark"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
