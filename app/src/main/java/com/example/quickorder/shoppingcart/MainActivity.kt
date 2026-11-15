@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
             .setLenient()
             .create()
 
-        val data = "[{\"id\":1,\"name\":\"Paracetamol 500mg\",\"price\":15000,\"category\":\"Pain Relief\",\"isPrescription\":false},{\"id\":2,\"name\":\"Amoxicillin 500mg\",\"price\":45000,\"category\":\"Antibiotic\",\"isPrescription\":true},{\"id\":3,\"name\":\"Vitamin C 1000mg\",\"price\":30000,\"category\":\"Supplement\",\"isPrescription\":false},{\"id\":4,\"name\":\"Cetirizine 10mg\",\"price\":20000,\"category\":\"Allergy\",\"isPrescription\":false}]"
+        val data = "[{\"id\":1,\"name\":\"Paracetamol 500mg\",\"price\":15000,\"category\":\"Pain Relief\",\"isPrescription\":false},{\"id\":2,\"name\":\"Amoxicillin 500mg\",\"price\":45000,\"category\":\"Antibiotic\",\"isPrescription\":true},{\"id\":3,\"name\":\"Vitamin C 1000mg\",\"price\":30000,\"category\":\"Supplement\",\"isPrescription\":false},{\"id\":4,\"name\":\"Cetirizine 10mg\",\"price\":20000,\"category\":\"Allergy\",\"isPrescription\":false},{\"id\":5,\"name\":\"Ibuprofen 400mg\",\"price\":25000,\"category\":\"Pain Relief\",\"isPrescription\":false},{\"id\":6,\"name\":\"Omeprazole 20mg\",\"price\":35000,\"category\":\"Digestive\",\"isPrescription\":true}]"
 
         val productListType: Type = object : TypeToken<List<Product>>() {}.type
         products = gson.fromJson(data, productListType)
