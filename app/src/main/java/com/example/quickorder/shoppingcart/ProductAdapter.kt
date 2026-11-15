@@ -5,7 +5,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
@@ -38,8 +38,8 @@ class ProductAdapter(var context: Context, var products: List<Product> = arrayLi
         private var productName: TextView = itemView.findViewById(R.id.product_name)
         private var productPrice: TextView = itemView.findViewById(R.id.product_price)
         private var productCategory: TextView = itemView.findViewById(R.id.product_category)
-        private var addToCart: Button = itemView.findViewById(R.id.addToCart)
-        private var removeItem: Button = itemView.findViewById(R.id.removeItem)
+        private var addToCart: ImageButton = itemView.findViewById(R.id.addToCart)
+        private var removeItem: ImageButton = itemView.findViewById(R.id.removeItem)
 
         @SuppressLint("CheckResult")
         fun bindProduct(product: Product) {
