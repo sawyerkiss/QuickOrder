@@ -22,10 +22,44 @@ class ProductAdapter(var context: Context, var products: List<Product> = arrayLi
 
     }
 
+    private var recyclerView: RecyclerView? = null
+
+    private val heightListener = View.OnLayoutChangeListener { v, _, top, _, bottom, _, oldTop, _, oldBottom ->
+        if (bottom - top != oldBottom - oldTop) v.post { notifyDataSetChanged() }
+    }
+
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        this.recyclerView = recyclerView
+        recyclerView.addOnLayoutChangeListener(heightListener)
+    }
+
+    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
+        recyclerView.removeOnLayoutChangeListener(heightListener)
+        this.recyclerView = null
+    }
+
+    private fun applyRowHeight(view: View) {
+        val parent = recyclerView ?: return
+        val availableHeight = parent.height - parent.paddingTop - parent.paddingBottom
+        if (availableHeight <= 0) return
+        val params = view.layoutParams
+        // StaggeredGridLayoutManager subtracts the item margins from an exact height itself.
+        val rowHeight = availableHeight / ROWS_PER_SCREEN
+        if (params.height != rowHeight) {
+            params.height = rowHeight
+            view.layoutParams = params
+        }
+    }
+
     override fun getItemCount(): Int = products.size
+
+    companion object {
+        private const val ROWS_PER_SCREEN = 3
+    }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
 
+        applyRowHeight(viewHolder.itemView)
         viewHolder.bindProduct(products[position])
 
 
