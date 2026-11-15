@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(R.layout.activity_main)
+        setContentView(binding.root)
 
         setSupportActionBar(binding.toolbar)
         apiService = APIConfig.getRetrofitClient(this).create(APIService::class.java)
@@ -71,6 +71,9 @@ class MainActivity : AppCompatActivity() {
         binding.productsRecyclerview.adapter = productAdapter
 
         productAdapter.notifyDataSetChanged()
+
+        binding.swipeRefreshLayout.isRefreshing = false
+        binding.swipeRefreshLayout.isEnabled = false
     }
 
     private fun getProductsOnline() {

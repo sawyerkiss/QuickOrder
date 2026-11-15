@@ -1,7 +1,6 @@
 package com.example.quickorder.shoppingcart
 
 import android.content.Context
-import android.widget.Toast
 
 class ShoppingCart private constructor() {
     var cartList: ArrayList<CartItem> = ArrayList()
@@ -42,11 +41,8 @@ class ShoppingCart private constructor() {
 
             if (targetItem != null) {
 
-                if (targetItem.quantity > 0) {
-
-                    Toast.makeText(context, "great quantity", Toast.LENGTH_SHORT).show()
-                    targetItem.quantity--
-                } else {
+                targetItem.quantity--
+                if (targetItem.quantity <= 0) {
                     cart.remove(targetItem)
                 }
 
